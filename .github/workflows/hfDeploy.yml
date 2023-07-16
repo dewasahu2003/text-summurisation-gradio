@@ -1,0 +1,23 @@
+
+
+name: Hugging Face Deploy
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+      - name: add remote
+        env:
+          HF: ${{secrets.HGF}}
+        run: git remote add space https://Dewa:$HF@huggingface.co/spaces/Dewa/Text-Summurisation
+        
+      - name: push-to-hub
+        env:
+          HF: ${{secrets.HGF}}
+        run: git push --force https://Dewa:$HF@huggingface.co/spaces/Dewa/Text-Summurisation main
